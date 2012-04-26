@@ -15,7 +15,11 @@ module Rack
     def call(env)
       request = Rack::Request.new(env)
       status, header, response = @app.call(env)
-      log env, request, status, header, response if @urls.include?(request.path) && @status_codes.include?(status)
+
+      url_matches_filter = @urls.include?(request.path) || @urls.empty?
+      status_matches_filter = @status_codes.include?(status) || @status_codes.empty?
+      log env, request, status, header, response if url_matches_filter && status_matches_filter
+
       [status, header, response]
     end
 
@@ -34,7 +38,7 @@ REQUEST:
 RESPONSE:
 #{formatted_response_header header}
   Status: #{status}
-  Body: #{response.body}
+  Body: #{response.body if response.respond_to?(:body)}
 LOG
     end
 
