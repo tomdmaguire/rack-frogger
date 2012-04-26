@@ -1,0 +1,13 @@
+= Rack Frogger
+
+Example usage:
+
+  use Rack::ReplaceHttpAccept, 'config/frogger.yaml'
+
+Example YAML config:
+
+  request_path_filter: [ '/example/path/1', '/example/path/2' ]
+  status_filter: [ 400, 404 ]
+  use_rails_logger: true
+  log_method: info
+
