@@ -1,5 +1,7 @@
 = Rack Frogger
 
+Frogger (filtered request logger) is a rack middleware to log HTTP requests filtered by response status and/or uri path.
+
 Example usage:
 
   use Rack::ReplaceHttpAccept, 'config/frogger.yaml'
@@ -10,4 +12,35 @@ Example YAML config:
   status_filter: [ 400, 404 ]
   use_rails_logger: true
   log_method: info
+
+Log format:
+
+  2012-04-27 09:45:00 UTC
+    URL: http://www.myapp.com/api/assets?asset_id=44a3f2a2-197f-427d-9f4a-b1ae77b3e500
+  REQUEST:
+    Server software : thin 1.2.11 codename Bat-Shit Crazy
+    Server name : www.myapp.com
+    Request method : GET
+    Request path : /api/assets
+    Path info : /api/assets
+    Query string : asset_id=44a3f2a2-197f-427d-9f4a-b1ae77b3e500
+    Request uri : /api/assets?asset_id=44a3f2a2-197f-427d-9f4a-b1ae77b3e500
+    Version : HTTP/1.0
+    X real ip : 10.183.232.22
+    X forwarded for : 86.732.60.20, 10.133.222.11
+    Host : www.myapp.com
+    Connection : close
+    Accept : application/vnd.my-app-v1+json
+    X cluster client ip : 86.252.64.22
+    Gateway interface : CGI/1.2
+    Server port : 80
+    Server protocol : HTTP/1.1
+    Script name :
+    Remote addr : 127.0.0.1
+    Origin :
+    Body:
+  RESPONSE:
+    Content-Type : text/html; charset=utf-8
+    Status: 400
+    Body:
 
